@@ -35,6 +35,8 @@ class FirstFragment : Fragment() {
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+
+        binding.textviewFirst.text = "Sortie de zelda dans XXX jours et XX:XX:XX"
     }
 
     override fun onDestroyView() {
