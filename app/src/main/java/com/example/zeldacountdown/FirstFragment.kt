@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.zeldacountdown.databinding.FragmentFirstBinding
+import java.time.LocalDate
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -18,7 +19,7 @@ class FirstFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
+;
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,11 +33,13 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.buttonFirst.visibility = View.INVISIBLE
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 
-        binding.textviewFirst.text = "Sortie de zelda dans XXX jours et XX:XX:XX"
+        val daysLeft = ZeldaCountDown(LocalDate.now()).daysLeft()
+        binding.textviewFirst.text = "Sortie de zelda dans $daysLeft jours"
     }
 
     override fun onDestroyView() {
