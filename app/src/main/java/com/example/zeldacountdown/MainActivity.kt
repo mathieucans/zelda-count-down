@@ -1,5 +1,7 @@
 package com.example.zeldacountdown
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +11,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.example.zeldacountdown.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -29,8 +32,29 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            val permission = this.applicationContext.checkSelfPermission(Manifest.permission.SEND_SMS)
+            if (permission === PackageManager.PERMISSION_GRANTED) {
+                Snackbar.make(view, "Send message", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            } else {
+                this.requestPermissions(arrayOf(Manifest.permission.SEND_SMS),100);
+            }
+
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode==100 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+        {
+            Toast.makeText(applicationContext,"Send message",Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(applicationContext,"permission denied",Toast.LENGTH_LONG).show();
         }
     }
 
