@@ -34,13 +34,16 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             val permission = this.applicationContext.checkSelfPermission(Manifest.permission.SEND_SMS)
             if (permission === PackageManager.PERMISSION_GRANTED) {
-                Snackbar.make(view, "Send message", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                SendSms()
             } else {
                 this.requestPermissions(arrayOf(Manifest.permission.SEND_SMS),100);
             }
 
         }
+    }
+
+    private fun SendSms() {
+
     }
 
     override fun onRequestPermissionsResult(
@@ -51,10 +54,10 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode==100 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
         {
-            Toast.makeText(applicationContext,"Send message",Toast.LENGTH_LONG).show();
+            SendSms()
         }
         else {
-            Toast.makeText(applicationContext,"permission denied",Toast.LENGTH_LONG).show();
+            Toast.makeText(applicationContext,"Il est nécessaire d'avoir les permissions pour envoyer un message",Toast.LENGTH_LONG).show();
         }
     }
 
