@@ -3,15 +3,15 @@ package com.example.zeldacountdown
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.telephony.SmsManager
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
 import com.example.zeldacountdown.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             val permission = this.applicationContext.checkSelfPermission(Manifest.permission.SEND_SMS)
             if (permission === PackageManager.PERMISSION_GRANTED) {
-                SendSms()
+                sendSms()
             } else {
                 this.requestPermissions(arrayOf(Manifest.permission.SEND_SMS),100);
             }
@@ -42,7 +42,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun SendSms() {
+    private fun sendSms() {
+        val smsManager: SmsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage("XXXXXXXX", null, "Bientôt zelda", null, null)
+        Toast.makeText(applicationContext,"Message envoyé",Toast.LENGTH_LONG).show();
 
     }
 
@@ -54,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode==100 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
         {
-            SendSms()
+            sendSms()
         }
         else {
             Toast.makeText(applicationContext,"Il est nécessaire d'avoir les permissions pour envoyer un message",Toast.LENGTH_LONG).show();
