@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun sendSms() {
         val smsManager: SmsManager = SmsManager.getDefault();
-        smsManager.sendTextMessage("XXXXXXXX", null, "Bientôt zelda", null, null)
+        smsManager.sendTextMessage("XXXXXXXX", null, "Bientôt zelda depuis l'app android ", null, null)
         Toast.makeText(applicationContext,"Message envoyé",Toast.LENGTH_LONG).show();
 
     }
